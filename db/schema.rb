@@ -32,7 +32,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_02_002136) do
     t.string "desc"
     t.integer "price"
     t.string "image"
-    t.integer "quantity", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
