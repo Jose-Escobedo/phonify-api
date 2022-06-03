@@ -1,60 +1,71 @@
 class CartItemsController < ApplicationController
+    skip_before_action :authorize_user, only: [:create, :show, :destroy, :add_quantity, :reduce_quantity]
 
-    skip_before_action :authorize_user, only: [:index, :update, :create, :destroy, :validate_item_quantity, :validate_cart_item ]
-    def create
-         # ensures that all the required parameters are there and exist
-    # in the database.
-    validate_phone_id
-    validate_cart_id
-    validate_item_quantity
-    cart = Cart.find(session[:cart_id])
-    cart.add_product(params[:id], session[:cart_id])
-    
-    render json: { status: 'SUCCESS', message: 'Item added to cart.' },
-               status: :created
-    end
-
-    def update
-        # ensures that all the required parameters are there and exist
-        # in the database
-        validate_phone_id
-        validate_cart_id
-        validate_item_quantity
-    
-        cart = Cart.find(params[:cart_id])
-        cart.update_cart_item(params[:phone_id], params[:quantity])
-    
-        render json: cart, status: :ok
+    def show
+        @cart = @current_cart
+        render json: @cart.cart_items, status: :ok
     end
     
-      # Removes an item from a cart. If the item doesn't exist or the cart
-      # doesn't exist then an error is raised
-      # DELETE /api/v1/carts/:cart_id/cart_items/:product_id
     def destroy
-        # ensures that all the required parameters are there and exist
-        # in the database
-    validate_phone_id
-    validate_cart_id
-    validate_cart_item
-    cart_item = CartItem.find_by!(phone_id: params[:phone_id], cart_id: params[:cart_id])
-    cart_item.destroy!
+        @cart_item = CartItem.find(params[:id])
+        @cart_item.destroy
+        redirect_to cart_path(@current_cart)
+    end 
 
-    render json: cart, status: :ok
-    end
+        
+        # # If cart already has this product then find the relevant line_item and iterate quantity otherwise create a new line_item for this product
+        # if current_cart.phones.include?(chosen_product)
+        #   # Find the line_item with the chosen_product
+        #   @cart_item = current_cart.cart_items.find_by(:phone_id => chosen_product)
+        #   # Iterate the cart_item's quantity by one
+        #   @cart_item.quantity ||=0
+        # else
+        #   @cart_item = CartItem.new
+        #   @cart_item.cart = current_cart
+        #   @cart_item.phone = chosen_product
+        # end
 
-    private
+    def create
+        # Find associated product and current cart
+        chosen_product = Phone.find(params[:phone_id])
+        current_cart = @current_cart
 
-# Ensures the item quantity is passed with the request
-    def validate_item_quantity
-        params.require(:quantity)
-    end
-
-# Ensures that the item exists in the cart
-    def validate_cart_item
-        cart_item = CartItem.find_by(phone_id: params[:phone_id])
-        if cart_item.nil?
-        raise ArgumentError, 'The item does not exist in the cart'
+        if current_cart.phones.include?(chosen_product)
+            raise ArgumentError, 'Product is already added to cart.'
+        else
+            @cart_item = CartItem.new
+            @cart_item.cart = current_cart
+            @cart_item.phone = chosen_product
+            @cart_item.quantity =1
         end
+  
+  
+        # Save and redirect to cart show path
+        @cart_item.save
+        render json: @current_cart, status: :ok
     end
+
+    def add_quantity
+        @cart_item = CartItem.find_by(phone_id: params[:phone_id])
+        @cart_item.increment!(:quantity)
+        @cart_item.save
+        render json: @cart_item, status: :ok
+    end
+      
+    def reduce_quantity
+        @cart_item = CartItem.find_by(phone_id: params[:phone_id])
+        if @cart_item.quantity == 0
+          @cart_item.destroy
+        else
+          @cart_item.decrement!(:quantity)
+        end
+        @cart_item.save
+        render json: @current_cart, status: :ok
+    end
+      
+    private
+        def cart_item_params
+          params.require(:cart_item).permit(:quantity,:phone_id, :cart_id)
+        end
 
 end

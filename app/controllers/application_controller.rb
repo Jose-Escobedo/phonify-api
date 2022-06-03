@@ -6,23 +6,10 @@ class ApplicationController < ActionController::API
     # before_action :current_user
     before_action :authorize_user
 #     skip_before_action :authorize_user, only: [:validate_phone_id, :validate_cart_id ]
+    before_action :current_cart
 
-#     def validate_phone_id
-#         params.require(:phone_id)
-#         phone_id = params[:phone_id].to_i # prevents SQL injection
-#         unless Phone.exists?(phone_id)
-#           raise ArgumentError, 'Product not found. The product might'\
-#            ' not exist or has been deleted.'
-#         end
-#     end
+    
 
-#   # Ensures that the cart_id parameter exists in the request
-#   # and that the cart_id exists in the Cart table
-#     def validate_cart_id
-#         params.require(:cart_id)
-#         cart_id = params[:cart_id].to_i # prevents SQL injection
-#         raise ArgumentError, 'Cart not found.' unless Cart.exists?(cart_id)
-#     end
    
     def current_user
         User.find_by(id: session[:current_user])
@@ -40,6 +27,22 @@ class ApplicationController < ActionController::API
     end
 
     private
+
+    def current_cart
+        if session[:cart_id]
+          cart = Cart.find_by(:id => session[:cart_id])
+          if cart.present?
+            @current_cart = cart
+          else
+            session[:cart_id] = nil
+          end
+        end
+  
+        if session[:cart_id] == nil
+          @current_cart = Cart.create
+          session[:cart_id] = @current_cart.id
+        end
+    end
 
     def render_unprocessable_entity_response(invalid)
         render json: { errors: invalid.record.errors }, status: :unprocessable_entity

@@ -5,12 +5,14 @@ Rails.application.routes.draw do
   resources :users, only: [:index, :show, :create, :destroy]
   resources :phones, only: [:index, :show]
   # resources :teams, only: [:index, :show]
-  resources :carts, only: [:show], param: :cart_id
-  resources :carts, only: [:create, :index]
-  delete 'carts', to: 'carts#destroy'
-  post 'carts/:cart_id/cart_items/:phone_id', to: 'cart_items#create'  
-  patch 'carts/:cart_id/cart_items/:phone_id', to: 'cart_items#update'                        
-  delete 'carts/:cart_id/cart_items/:phone_id', to: 'cart_items#destroy' 
+  get 'carts/:id' => "carts#show"
+  delete 'carts/:id' => "carts#destroy"
+  
+  post 'cart_items/add' => "cart_items#add_quantity"
+  post 'cart_items/reduce' => "cart_items#reduce_quantity"
+  post 'cart_items' => "cart_items#create"
+  get 'cart_items/:id' => "cart_items#show"
+  delete 'cart_items/:id' => "cart_items#destroy"
 
 
   post "/login", to: "sessions#login"
