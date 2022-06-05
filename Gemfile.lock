@@ -1,3 +1,14 @@
+GIT
+  remote: https://github.com/rails/activerecord-session_store.git
+  revision: 9198a952916df925f36ac2beab247296ee5c0341
+  specs:
+    activerecord-session_store (2.0.0)
+      actionpack (>= 6.1)
+      activerecord (>= 6.1)
+      multi_json (~> 1.11, >= 1.11.2)
+      rack (>= 2.0.8, < 3)
+      railties (>= 6.1)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -96,6 +107,7 @@ GEM
     mini_mime (1.1.2)
     minitest (5.15.0)
     msgpack (1.5.2)
+    multi_json (1.15.0)
     net-imap (0.2.3)
       digest
       net-protocol
@@ -165,6 +177,7 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
+  activerecord-session_store!
   bcrypt (~> 3.1.7)
   bootsnap
   debug

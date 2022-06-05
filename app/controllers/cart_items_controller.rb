@@ -1,6 +1,6 @@
 class CartItemsController < ApplicationController
     skip_before_action :authorize_user, only: [:create, :show, :destroy, :add_quantity, :reduce_quantity]
-
+    before_action :current_cart
     def show
         @cart = @current_cart
         render json: @cart.cart_items, status: :ok
@@ -37,6 +37,7 @@ class CartItemsController < ApplicationController
             @cart_item.cart = current_cart
             @cart_item.phone = chosen_product
             @cart_item.quantity =1
+            @cart_item.quantity = @cart_item.quantity.to_i
         end
   
   
@@ -46,21 +47,21 @@ class CartItemsController < ApplicationController
     end
 
     def add_quantity
-        @cart_item = CartItem.find_by(phone_id: params[:phone_id])
+        @cart_item = @current_cart.cart_items.find_by(phone_id: params[:phone_id])
         @cart_item.increment!(:quantity)
         @cart_item.save
         render json: @cart_item, status: :ok
     end
       
     def reduce_quantity
-        @cart_item = CartItem.find_by(phone_id: params[:phone_id])
-        if @cart_item.quantity == 0
+        @cart_item = @current_cart.cart_items.find_by(phone_id: params[:phone_id])
+        if @cart_item.quantity == 1
           @cart_item.destroy
         else
           @cart_item.decrement!(:quantity)
         end
         @cart_item.save
-        render json: @current_cart, status: :ok
+        render json: @cart_item, status: :ok
     end
       
     private
