@@ -3,9 +3,9 @@ class ApplicationController < ActionController::API
     rescue_from ActiveRecord::RecordNotFound, with: :render_not_found_response
     
     include ActionController::Cookies
-    # before_action :current_user
-    before_action :authorize_user
-#     skip_before_action :authorize_user, only: [:validate_phone_id, :validate_cart_id ]
+
+    # before_action :authorize_user
+
     
 
     

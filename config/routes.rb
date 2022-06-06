@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   resources :users, only: [:index, :show, :create, :destroy]
   resources :phones, only: [:index, :show]
   # resources :teams, only: [:index, :show]
-  get '/current_cart' => "carts#show"
+  get '/Cart' => "carts#show"
   get '/carts' => "carts#index"
   delete '/carts/:id' => "carts#destroy"
   delete '/carts/empty_carts' => "carts#destroy_all_carts"

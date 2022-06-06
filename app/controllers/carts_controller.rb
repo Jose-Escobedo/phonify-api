@@ -1,5 +1,5 @@
 class CartsController < ApplicationController
-      skip_before_action :authorize_user, only: [:cart_items, :index, :show, :destroy, :create]
+      # skip_before_action :authorize_user, only: [:cart_items, :index, :show, :destroy, :create]
       before_action :current_cart
       def show
         @cart = @current_cart

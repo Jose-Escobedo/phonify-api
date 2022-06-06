@@ -1,5 +1,5 @@
 class PhonesController < ApplicationController
-    skip_before_action :authorize_user, only: [:index]
+    # skip_before_action :authorize_user, only: [:index]
     def index
         phones = Phone.all
         render json: phones, status: :ok

@@ -18,6 +18,10 @@ gem "faker", "~> 2.21"
 
 gem 'bcrypt', '~> 3.1.7'
 
+gem 'active_model_serializers', '~> 0.10.2'
+
+gem 'jbuilder', '~> 2.7'
+
 gem 'activerecord-session_store', github: 'rails/activerecord-session_store'
 
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]

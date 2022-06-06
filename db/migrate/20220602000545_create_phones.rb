@@ -5,6 +5,7 @@ class CreatePhones < ActiveRecord::Migration[7.0]
       t.string :desc
       t.integer :price
       t.string :image
+      t.integer :quantity
       t.timestamps
     end
   end
