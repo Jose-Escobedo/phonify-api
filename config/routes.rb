@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   # Leave this here to help deploy your app later!
   resources :users, only: [:index, :show, :create, :destroy]
   resources :phones, only: [:index, :show]
+  resources :orders, only: [:create, :show, :index]
   # resources :teams, only: [:index, :show]
   get '/Cart' => "carts#show"
   get '/carts' => "carts#index"
