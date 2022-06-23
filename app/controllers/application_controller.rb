@@ -28,14 +28,6 @@ class ApplicationController < ActionController::API
 
     private
 
-       # if session[:cart_id]
-        #   cart = Cart.find_by(cart_id: session[:cart_id])
-        #   if cart.include?(session[:cart_id])
-        #     @current_cart = cart
-        #   else
-        #     session[:cart_id] = nil
-        #   end
-
         def current_cart
           if session[:cart_id]
             cart = Cart.find_by(:id => session[:cart_id])
