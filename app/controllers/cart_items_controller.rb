@@ -45,7 +45,7 @@ class CartItemsController < ApplicationController
   
         # Save and redirect to cart show path
         @cart_item.save
-        render json: @current_cart, status: :ok
+        render json: @current_cart.phones, status: :ok
     end
 
     def add_quantity
