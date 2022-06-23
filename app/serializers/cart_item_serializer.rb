@@ -1,3 +1,6 @@
 class CartItemSerializer < ActiveModel::Serializer
-  attributes :id, :phone_id, :quantity
+  belongs_to :phone
+  belongs_to :cart
+  belongs_to :order
+  attributes :id, :phone_id, :quantity, :cart_id
 end

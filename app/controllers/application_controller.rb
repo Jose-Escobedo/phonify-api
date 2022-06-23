@@ -39,8 +39,10 @@ class ApplicationController < ActionController::API
         def current_cart
           if session[:cart_id]
             cart = Cart.find_by(:id => session[:cart_id])
+            order = Order.find_by(:id => session[:cart_id])
             if cart.present?
               @current_cart = cart
+              @current_order = order
             else
               session[:cart_id] = nil
             end
@@ -48,6 +50,7 @@ class ApplicationController < ActionController::API
     
           if session[:cart_id] == nil
             @current_cart = Cart.create
+            @current_order = Order.new
             session[:cart_id] = @current_cart.id
           end
         end

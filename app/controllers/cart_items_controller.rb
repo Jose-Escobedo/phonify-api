@@ -10,40 +10,26 @@ class CartItemsController < ApplicationController
     def destroy
         @cart_item = CartItem.find(params[:id])
         @cart_item.destroy
-        redirect_to cart_path(@current_cart)
     end 
-
-        
-        # # If cart already has this product then find the relevant line_item and iterate quantity otherwise create a new line_item for this product
-        # if current_cart.phones.include?(chosen_product)
-        #   # Find the line_item with the chosen_product
-        #   @cart_item = current_cart.cart_items.find_by(:phone_id => chosen_product)
-        #   # Iterate the cart_item's quantity by one
-        #   @cart_item.quantity ||=0
-        # else
-        #   @cart_item = CartItem.new
-        #   @cart_item.cart = current_cart
-        #   @cart_item.phone = chosen_product
-        # end
 
     def create
         # Find associated product and current cart
         chosen_product = Phone.find(params[:phone_id])
         current_cart = @current_cart
+        current_order = @current_order
 
         if current_cart.phones.include?(chosen_product)
             raise ArgumentError, 'Product is already added to cart.'
         else
             @cart_item = CartItem.new
             @cart_item.cart = current_cart
+            @cart_item.order = current_order
             @cart_item.phone = chosen_product
             @cart_item.quantity =1
             @cart_item.phone.update_attribute(:quantity, 1)
             @cart_item.quantity = @cart_item.quantity.to_i
         end
   
-  
-        # Save and redirect to cart show path
         @cart_item.save
         render json: @current_cart.phones, status: :ok
     end
@@ -67,6 +53,8 @@ class CartItemsController < ApplicationController
         @cart_item.save
         render json: @cart_item, status: :ok
     end
+
+
       
     private
         def cart_item_params

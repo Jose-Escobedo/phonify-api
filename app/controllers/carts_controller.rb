@@ -8,7 +8,7 @@ class CartsController < ApplicationController
 
       def cart_items
         @cart = @current_cart
-        render json: @cart.cart_items, status: :ok
+        render json: @cart.phones, status: :ok
       end
 
       def index
@@ -21,4 +21,6 @@ class CartsController < ApplicationController
         @cart.destroy
         render json: @cart, status: :ok
       end
+
+ 
 end
