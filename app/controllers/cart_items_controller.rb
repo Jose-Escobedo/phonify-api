@@ -16,14 +16,12 @@ class CartItemsController < ApplicationController
         # Find associated product and current cart
         chosen_product = Phone.find(params[:phone_id])
         current_cart = @current_cart
-        current_order = @current_order
 
         if current_cart.phones.include?(chosen_product)
             raise ArgumentError, 'Product is already added to cart.'
         else
             @cart_item = CartItem.new
             @cart_item.cart = current_cart
-            @cart_item.order = current_order
             @cart_item.phone = chosen_product
             @cart_item.quantity =1
             @cart_item.phone.update_attribute(:quantity, 1)
