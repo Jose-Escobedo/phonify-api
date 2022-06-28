@@ -6,6 +6,7 @@ class CreateOrders < ActiveRecord::Migration[7.0]
       t.text :address
       t.string :pay_method
       t.text :delivery_instructions
+      t.integer :total
       t.timestamps
     end
   end

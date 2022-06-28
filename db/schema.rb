@@ -34,6 +34,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_23_010602) do
     t.text "address"
     t.string "pay_method"
     t.text "delivery_instructions"
+    t.integer "total"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
