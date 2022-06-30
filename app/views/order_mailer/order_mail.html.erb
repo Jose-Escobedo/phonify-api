@@ -1,0 +1,17 @@
+ <%= "Name: "%><%= @current_order.name %> 
+ <br>
+ <%= "Email: "%><%= @current_order.email %>
+ <br>
+ <%= "Address: "%><%= @current_order.address %> 
+ <br> 
+ <%= "Pay_Method: "%><%= @current_order.pay_method %> 
+ <br> 
+ <%= "Delivery_Instructions: "%><%= @current_order.delivery_instructions %> 
+ <br>
+ <%= "Products Purchased: "%>
+ <br>
+ <%= @product_info.join('<br />').html_safe %>                               
+ <br>
+ <%= "Total Price: "%><%= @current_order.total %>
+ <br>
+ 

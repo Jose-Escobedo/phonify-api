@@ -29,5 +29,7 @@
 !/tmp/storage/
 !/tmp/storage/.keep
 
+/config/initializers/app_env_vars.rb
+
 # Ignore master key for decrypting credentials and more.
 /config/master.key

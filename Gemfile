@@ -16,6 +16,8 @@ gem 'rack-cors', '~> 1.1', '>= 1.1.1'
 
 gem "faker", "~> 2.21"
 
+gem 'mail', '~> 2.6', '>= 2.6.4'
+
 gem 'bcrypt', '~> 3.1.7'
 
 gem 'active_model_serializers', '~> 0.10.2'
