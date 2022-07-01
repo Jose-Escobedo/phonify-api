@@ -18,7 +18,7 @@ module PhonifyApi
 
     config.middleware.insert_before 0, Rack::Cors do
       allow do
-        origins 'http://localhost:4000','http://localhost:4000/Cart'
+        origins "https://phonify-app.herokuapp.com"
         resource '*', 
           headers: :any, 
           expose: ['access-token', 'expiry', 'token-type', 'uid', 'client'],
