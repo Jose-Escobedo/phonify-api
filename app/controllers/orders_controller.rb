@@ -7,7 +7,7 @@ class OrdersController < ApplicationController
     item.cart_id = nil
   end
       @current_order.save
-      OrderMailer.order_mail(@current_order).deliver_now
+      OrderMailer.order_mail(@current_order).deliver_later
       Cart.destroy(session[:cart_id])
       session[:cart_id] = nil
       render json: @current_order, status: :ok
