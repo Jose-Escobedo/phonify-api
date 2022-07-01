@@ -26,6 +26,10 @@ class ApplicationController < ActionController::API
     #     return render json: { error: "Not Authorized" }, status: :unauthorized unless current_user.admin
     # end
 
+    def fallback_index_html
+      render :file => 'public/index.html'
+    end
+
     private
 
         def current_cart
