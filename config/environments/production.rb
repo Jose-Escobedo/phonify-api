@@ -71,6 +71,23 @@ Rails.application.configure do
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = ::Logger::Formatter.new
 
+  config.action_dispatch.cookies_same_site_protection = :None
+
+  config.action_mailer.default_url_options = { host: "https://phonify-app.herokuapp.com/" }
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.perform_deliveries = true 
+  ActionMailer::Base.delivery_method = :smtp
+  ActionMailer::Base.smtp_settings = {
+     :address => "smtp.gmail.com",
+     :port => 587,
+     :domain => "gmail.com",
+     :authentication => 'plain',
+     :user_name => ENV["MAILER_EMAIL"],
+     :password => ENV["MAILER_PASSWORD"],
+  }
+  
+
+
   # Use a different logger for distributed setups.
   # require "syslog/logger"
   # config.logger = ActiveSupport::TaggedLogging.new(Syslog::Logger.new "app-name")

@@ -26,6 +26,8 @@ gem 'jbuilder', '~> 2.7'
 
 gem 'activerecord-session_store', github: 'rails/activerecord-session_store'
 
+gem 'rails_same_site_cookie', '~> 0.1.0'
+
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 # gem "jbuilder"
 
